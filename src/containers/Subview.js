@@ -2,7 +2,7 @@
  * # Subview.js
  *
  *  This is called from main to demonstrate the back button
- *  
+ *
  */
 'use strict';
 /*
@@ -10,42 +10,35 @@
  *  
  * Imports from redux
  */
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {Map} from "immutable";
+import {Actions} from "react-native-router-flux";
+import NavigationBar from "react-native-navbar";
+import React from "react";
+import {StyleSheet, View, Text} from "react-native";
 
 /**
  * Immutable
- */ 
-import {Map} from 'immutable';
+ */
 
 /**
  * Router
  */
-import {Actions} from 'react-native-router-flux';
 
 /**
  * Navigation Bar
  */
-import NavigationBar from 'react-native-navbar';
 
 /**
  * The necessary components from React
  */
-import React from 'react';
-import
-{  
-	StyleSheet,
-  View,
-  Text
-}
-from 'react-native';
 
 /**
  * If your app uses Redux action creators, you can add them here...
- * 
+ *
  */
-const actions = [
-];
+const actions = [];
 
 /**
  *  Instead of including all app states via ...state
@@ -53,9 +46,9 @@ const actions = [
  *
  */
 function mapStateToProps(state) {
-  return {
-      ...state
-  };
+    return {
+        ...state
+    };
 };
 
 /*
@@ -65,58 +58,58 @@ function mapStateToProps(state) {
  */
 function mapDispatchToProps(dispatch) {
 
-  const creators = Map()
-          .merge(...actions)
-          .filter(value => typeof value === 'function')
-          .toObject();
+    const creators = Map()
+        .merge(...actions)
+        .filter(value => typeof value === 'function')
+        .toObject();
 
-  return {
-    actions: bindActionCreators(creators, dispatch),
-    dispatch
-  };
+    return {
+        actions: bindActionCreators(creators, dispatch),
+        dispatch
+    };
 }
 
 var styles = StyleSheet.create({
-  container: {
-    borderTopWidth: 2,
-    borderBottomWidth:2,
-    marginTop: 80,
-    padding: 10
-  },
-  summary: {
-    fontFamily: 'BodoniSvtyTwoITCTT-Book',
-    fontSize: 18,
-    fontWeight: 'bold'
-  }
+    container: {
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        marginTop: 80,
+        padding: 10
+    },
+    summary: {
+        fontFamily: 'BodoniSvtyTwoITCTT-Book',
+        fontSize: 18,
+        fontWeight: 'bold'
+    }
 });
 
 /**
  * ## Subview class
  */
 let Subview = React.createClass({
-  
-  render() {
-    var titleConfig = {
-      title: "Subview"
-    };
-    
-    var leftButtonConfig = {
-      title: 'Back',
-      handler: Actions.pop
-    };
-    
-    return(
-      <View>
-	<NavigationBar
-            title={ titleConfig }
-            leftButton={ leftButtonConfig }
-	/>
-	<View style={ styles.container }>
-	  <Text style={ styles.summary }>Subview</Text>
-	</View>
-      </View>
-    );
-  }
+
+    render() {
+        var titleConfig = {
+            title: "Subview"
+        };
+
+        var leftButtonConfig = {
+            title: 'Back',
+            handler: Actions.pop
+        };
+
+        return (
+            <View>
+                <NavigationBar
+                    title={ titleConfig }
+                    leftButton={ leftButtonConfig }
+                />
+                <View style={ styles.container }>
+                    <Text style={ styles.summary }>Subview</Text>
+                </View>
+            </View>
+        );
+    }
 });
 
 /**

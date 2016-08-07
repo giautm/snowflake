@@ -13,86 +13,32 @@
  *
  * Necessary components from ReactNative
  */
-import React from 'react';
-import {
-  AppRegistry,
-  Navigator,
-  StyleSheet,
-  View,
-  Text } from 'react-native';
-
-/**
- * ### Router-Flux
- *
- * Necessary components from Router-Flux
- */
-import {
-  Router,
-  Scene,
-  TabBar} from 'react-native-router-flux';
-
-/**
- * ### Redux
- *
- * ```Provider``` will tie the React-Native to the Redux store
- */
-import {
-  Provider,
-  connect } from 'react-redux';
-
-/**
- * ### configureStore
- *
- *  ```configureStore``` will connect the ```reducers```, the
- *
- */
-import configureStore from './lib/configureStore';
+import React from "react";
+import {AppRegistry, Navigator, StyleSheet, View, Text} from "react-native";
+import {Router, Scene} from "react-native-router-flux";
+import {Provider} from "react-redux";
+import configureStore from "./lib/configureStore";
+import Login from "./containers/Login";
+import Logout from "./containers/Logout";
+import Register from "./containers/Register";
+import ForgotPassword from "./containers/ForgotPassword";
+import Profile from "./containers/Profile";
+import Main from "./containers/Main";
+import Subview from "./containers/Subview";
+import Icon from "react-native-vector-icons/FontAwesome";
+import {setPlatform, setVersion} from "./reducers/device/deviceActions";
+import {setStore} from "./reducers/global/globalActions";
+import authInitialState from "./reducers/auth/authInitialState";
+import deviceInitialState from "./reducers/device/deviceInitialState";
+import globalInitialState from "./reducers/global/globalInitialState";
+import profileInitialState from "./reducers/profile/profileInitialState";
 
 
-/**
- * ### containers
- *
- * All the top level containers
- *
- */
-import App from './containers/App';
-import Login from './containers/Login';
-import Logout from './containers/Logout';
-import Register from './containers/Register';
-import ForgotPassword from './containers/ForgotPassword';
-import Profile from './containers/Profile';
-import Main from './containers/Main';
-import Subview from './containers/Subview';
-
-/** 
- * ### icons
- *
- * Add icon support for use in Tabbar
- * 
- */
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-/**
- * ## Actions
- *  The necessary actions for dispatching our bootstrap values
- */
-import {setPlatform, setVersion} from './reducers/device/deviceActions';
-import {setStore} from './reducers/global/globalActions';
-
-/**
- * ## States
- * Snowflake explicitly defines initial state
- *
- */
-import authInitialState from './reducers/auth/authInitialState';
-import deviceInitialState from './reducers/device/deviceInitialState';
-import globalInitialState from './reducers/global/globalInitialState';
-import profileInitialState from './reducers/profile/profileInitialState';
 
 /**
  *  The version of the app but not  displayed yet
  */
-var VERSION='0.1.2';
+var VERSION = '0.1.2';
 
 /**
  *
@@ -101,37 +47,37 @@ var VERSION='0.1.2';
  * @returns {Object} object with 4 keys
  */
 function getInitialState() {
-  const _initState = {
-    auth: new authInitialState,
-    device: (new deviceInitialState).set('isMobile',true),
-    global: (new globalInitialState),
-    profile: new profileInitialState
-  };
-  return _initState;
+    const _initState = {
+        auth: new authInitialState,
+        device: (new deviceInitialState).set('isMobile', true),
+        global: (new globalInitialState),
+        profile: new profileInitialState
+    };
+    return _initState;
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    height: 70
-  }
+    tabBar: {
+        height: 70
+    }
 });
 
 /**
- * ## TabIcon 
- * 
+ * ## TabIcon
+ *
  * Displays the icon for the tab w/ color dependent upon selection
  */
 
 class TabIcon extends React.Component {
-  render(){
-    var color = this.props.selected ? '#FF3366' : '#FFB3B3';
-    return (
-        <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center'}}>
-        <Icon style={{color: color}} name={this.props.iconName} size={30} />
-        <Text style={{color: color}}>{this.props.title}</Text>
-        </View>
-    );
-  }
+    render() {
+        var color = this.props.selected ? '#FF3366' : '#FFB3B3';
+        return (
+            <View style={{flex:1, flexDirection:'column', alignItems:'center', alignSelf:'center'}}>
+                <Icon style={{color: color}} name={this.props.iconName} size={30}/>
+                <Text style={{color: color}}>{this.props.title}</Text>
+            </View>
+        );
+    }
 }
 
 /**
@@ -144,88 +90,94 @@ class TabIcon extends React.Component {
  */
 
 export default function native(platform) {
+    let Snowflake = function () {
+        const store = configureStore(getInitialState());
 
-  let Snowflake = React.createClass( {
-    render() {
-      
-      const store = configureStore(getInitialState());
-      
-      // configureStore will combine reducers from snowflake and main application
-      // it will then create the store based on aggregate state from all reducers
-      store.dispatch(setPlatform(platform));
-      store.dispatch(setVersion(VERSION));
-      store.dispatch(setStore(store));
-      
-      // setup the router table with App selected as the initial component
-      // note: See https://github.com/aksonov/react-native-router-flux/issues/948 
-      return (
-        <Provider store={store}>
+        // configureStore will combine reducers from snowflake and main application
+        // it will then create the store based on aggregate state from all reducers
+        store.dispatch(setPlatform(platform));
+        store.dispatch(setVersion(VERSION));
+        store.dispatch(setStore(store));
 
-	  <Router sceneStyle={{ backgroundColor: 'white' }}>
-	    <Scene key="root"
-                   hideNavBar={true}>
-	      <Scene key="InitialLoginForm"
-                     component={Register}
-                     title="Register"
-                     type="replace"
-                     initial={true}/>
-              
-              <Scene key="Login"
-                     component={Login}
-                     title="Login" 
-                     type="replace"/>
-	      
-	      <Scene key="Register"
-                     component={Register}
-                     title="Register"
-                     type="replace" />
-	      
-	      <Scene key="ForgotPassword"
-                     component={ForgotPassword}
-                     title="ForgotPassword" 
-                     type="replace"/>
-	      
-	      <Scene key="Subview"
-                     component={Subview}
-                     title="Subview"/>
+        // setup the router table with App selected as the initial component
+        // note: See https://github.com/aksonov/react-native-router-flux/issues/948
+        return (
+            <Provider store={store}>
+                <Router sceneStyle={{ backgroundColor: 'white' }}>
+                    <Scene
+                        key="root"
+                        hideNavBar={true}>
+                        <Scene
+                            key="InitialLoginForm"
+                            component={Register}
+                            title="Register"
+                            type="replace"
+                            initial={true}
+                        />
+                        <Scene
+                            key="Login"
+                            component={Login}
+                            title="Login"
+                            type="replace"
+                        />
+                        <Scene
+                            key="Register"
+                            component={Register}
+                            title="Register"
+                            type="replace"
+                        />
+                        <Scene
+                            key="ForgotPassword"
+                            component={ForgotPassword}
+                            title="ForgotPassword"
+                            type="replace"
+                        />
+                        <Scene
+                            key="Subview"
+                            component={Subview}
+                            title="Subview"
+                        />
+                        <Scene
+                            key="TabBar"
+                            tabs={true}
+                            hideNavBar={true}
+                            tabBarStyle={ styles.tabBar }
+                            default="Main"
+                        >
+                            <Scene
+                                key="Logout"
+                                title="logout"
+                                icon={TabIcon}
+                                iconName={"sign-out"}
+                                hideNavBar={true}
+                                component={Logout}
+                            />
+                            <Scene
+                                key="Main"
+                                title="main"
+                                iconName={"home"}
+                                icon={TabIcon}
+                                hideNavBar={true}
+                                component={Main}
+                                initial={true}
+                            />
+                            <Scene
+                                key="Profile"
+                                title="profile"
+                                icon={TabIcon}
+                                iconName={"gear"}
+                                hideNavBar={true}
+                                component={Profile}
+                            />
+                        </Scene>
+                    </Scene>
+                </Router>
+            </Provider>
+        );
+    };
 
-	      <Scene key="Tabbar"
-                     tabs={true}
-                     hideNavBar={true}
-                     tabBarStyle={ styles.tabBar }
-                     default="Main">
-                
-	        <Scene key="Logout"
-                       title="logout"
-                       icon={TabIcon}
-                       iconName={"sign-out"}
-                       hideNavBar={true}
-                       component={Logout}/>
-                
-	        <Scene key="Main"
-                       title="main"
-                       iconName={"home"}
-                       icon={TabIcon}                       
-                       hideNavBar={true}
-                       component={Main}
-                       initial={true}/>
-
-                <Scene key="Profile"
-                       title="profile"
-                       icon={TabIcon}                       
-                       iconName={"gear"}
-                       hideNavBar={true}
-                       component={Profile}/>
-	      </Scene>
-	    </Scene>
-	  </Router>
-        </Provider>
-      );
-    }
-  });
-  /**
-   * registerComponent to the AppRegistery and off we go....
-   */
-
-  AppRegistry.registerComponent('snowflake', () => Snowflake);
+    /**
+     * registerComponent to the AppRegistery and off we go....
+     */
+    AppRegistry.registerComponent('snowflake', () => Snowflake);
 }

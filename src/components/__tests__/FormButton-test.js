@@ -9,22 +9,21 @@
 'use strict';
 
 /**
-* ## Imports
+ * ## Imports
  */
 
-import 'react-native';
-import React from 'react';
-
-import FormButton from '../FormButton';
-
-import renderer from 'react/lib/ReactTestRenderer';
+import "react-native";
+import React from "react";
+import FormButton from "../FormButton";
+import renderer from "react/lib/ReactTestRenderer";
 
 test('FormButton', () => {
-  const props = {
-    isDisabled: false,
-    onPress: () => {},
-    buttonText: 'TestString'
-  };
-  const tree = renderer.create(<FormButton {...props} />).toJSON();
-  expect(tree).toMatchSnapshot();
+    const props = {
+        isDisabled: false,
+        onPress: () => {
+        },
+        buttonText: 'TestString'
+    };
+    const tree = renderer.create(<FormButton {...props} />).toJSON();
+    expect(tree).toMatchSnapshot();
 });

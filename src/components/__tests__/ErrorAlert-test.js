@@ -30,27 +30,27 @@ var ErrorAlert = require('../ErrorAlert');
  * ## Test
  */
 describe('ErrorAlert', () => {
-  it('should be fine', () => {
-    /**
-     * ### defaults
-     */
-    const errorAlertProps = {
-      error: {
-        error: 'Error occurred'
-      }
-    };
+    it('should be fine', () => {
+        /**
+         * ### defaults
+         */
+        const errorAlertProps = {
+            error: {
+                error: 'Error occurred'
+            }
+        };
 
-    /**
-     * Invoke the ErrorAlert constructor and pass in the mocked
-     * version
-     * Then call the method that processes the error
-     * check that the title is 'Error' which is a hard coded constant
-     * and the alert matches the props error
-     */
-    new ErrorAlert().checkError(errorAlertProps);
-    expect(SimpleAlert.alert.mock.calls[0][0]).toEqual('Error');
-    expect(SimpleAlert.alert.mock.calls[0][1]).toEqual(errorAlertProps.error.error);
-  });
+        /**
+         * Invoke the ErrorAlert constructor and pass in the mocked
+         * version
+         * Then call the method that processes the error
+         * check that the title is 'Error' which is a hard coded constant
+         * and the alert matches the props error
+         */
+        new ErrorAlert().checkError(errorAlertProps);
+        expect(SimpleAlert.alert.mock.calls[0][0]).toEqual('Error');
+        expect(SimpleAlert.alert.mock.calls[0][1]).toEqual(errorAlertProps.error.error);
+    });
 
 
 });//describe ErrorAlert

@@ -9,14 +9,14 @@
  *
  * InitialState
  */
-import InitialState from './deviceInitialState';
+import InitialState from "./deviceInitialState";
 
 /**
  * Device actions to test
  */
 const {
-  SET_PLATFORM,
-  SET_VERSION
+    SET_PLATFORM,
+    SET_VERSION
 } = require('../../lib/constants').default;
 
 const initialState = new InitialState;
@@ -27,26 +27,18 @@ const initialState = new InitialState;
  * @param {Object} action - type and payload
  */
 export default function deviceReducer(state = initialState, action) {
-  if (!(state instanceof InitialState)) return initialState.merge(state);
+    if (!(state instanceof InitialState)) {
+        return initialState.merge(state);
+    }
 
-  switch (action.type) {
+    switch (action.type) {
+        case SET_PLATFORM:
+            const platform = action.payload;
+            return state.set('platform', platform);
+        case SET_VERSION:
+            const version = action.payload;
+            return state.set('version', version);
+    }
 
-    /**
-     * ### set the platform in the state
-     *
-     */
-  case SET_PLATFORM:
-    const platform = action.payload;
-    return state.set('platform', platform);
-
-    /**
-     * ### set the version in the state
-     *
-     */
-  case SET_VERSION:
-    const version = action.payload;
-    return state.set('version', version);
-  }
-
-  return state;
+    return state;
 }

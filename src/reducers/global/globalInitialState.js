@@ -1,6 +1,6 @@
 /**
  * # globalInitialState.js
- * 
+ *
  * This class is a Immutable object
  * Working *successfully* with Redux, requires
  * state that is immutable.
@@ -12,10 +12,10 @@
 /**
  * ## Import
  */
-import {Record} from 'immutable';
+import {fromJS} from "immutable";
 /**
  * ## InitialState
- *  
+ *
  * * currentUser - object returned from Parse.com when validated
  * * showState - toggle for Header to display state
  * * currentState - object in Json format of the entire state
@@ -26,10 +26,9 @@ import {Record} from 'immutable';
  *   * profile
  *
  */
-var InitialState = Record({
-  currentUser: null,
-  showState: false,
-  currentState: null,
-  store: null
+export default fromJS({
+    currentUser: null,
+    showState: false,
+    currentState: null,
+    store: null
 });
-export default InitialState;

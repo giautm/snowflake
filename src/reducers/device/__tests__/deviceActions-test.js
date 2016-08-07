@@ -36,8 +36,8 @@ var actions = require('../deviceActions');
  * actions under test
  */
 const {
-  SET_PLATFORM,
-  SET_VERSION
+    SET_PLATFORM,
+    SET_VERSION
 } = require('../../../lib/constants').default;
 
 /**
@@ -46,20 +46,20 @@ const {
  * deviceActions
  */
 describe('deviceActions', () => {
-  it('should setPlatform', () => {
-    let platform = 'ios';
-    expect(actions.setPlatform(platform)).toEqual({
-      type: SET_PLATFORM,
-      payload: platform
+    it('should setPlatform', () => {
+        let platform = 'ios';
+        expect(actions.setPlatform(platform)).toEqual({
+            type: SET_PLATFORM,
+            payload: platform
+        });
     });
-  });
 
-  it('should setVersion', () => {
-    let version = '0.0.8';
-    expect(actions.setVersion(version)).toEqual({
-      type: SET_VERSION,
-      payload: version
+    it('should setVersion', () => {
+        let version = '0.0.8';
+        expect(actions.setVersion(version)).toEqual({
+            type: SET_VERSION,
+            payload: version
+        });
     });
-  });
 });
 

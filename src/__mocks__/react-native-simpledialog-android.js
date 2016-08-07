@@ -1,8 +1,8 @@
 /**
  * # __mocks__/SimpleAlert.js
- * 
+ *
  * A simple mock for a simple class
- * 
+ *
  */
 'use strict';
 
